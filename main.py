@@ -43,10 +43,12 @@ def transfere(dicContas):
     conta2 = dicContas.get(cod2)
     conta.transfer(conta2, valor)
 
-def extrato()
+def extrato():
     cod = input().strip
     conta = dicContas.get(cod)
     conta.extrato
+    
+def investe():
     
 
 def operation(hold):
@@ -56,7 +58,7 @@ def operation(hold):
         3: depositar(),
         4: transfere(),
         5: extrato(),
-        6: break,
+        6: investe()
     }
     return oper.get(hold)
 
@@ -72,5 +74,7 @@ while True:
     while hold not in ["1", "2", "3", "4", "5", "6"]:
         hold = input("Digite um input válido").strip()
     hold = int(hold)
+    if hold == 7:
+        break
 
     operation(hold)

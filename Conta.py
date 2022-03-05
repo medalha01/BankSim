@@ -34,8 +34,14 @@ class Conta:
 
 
 class Cartao(Conta):
-    a = 0
+    def __init__(self, Limite_trans, Numero_card, Codigo_seg, Senha_card):
+        self.limite_trans = Limite_trans
+        self.numero_card = Numero_card
+        self.codigo_seg = Codigo_seg
+        self.senha_card = Senha_card
 
 
 class Premium(Conta):
-    a = 0
+    def __init__(self, Cpf, Nome, Senha, Saldo, Carteira):
+        Conta.__init__(self, Cpf, Nome, Senha, Saldo)
+        self.Carteira = Carteira
