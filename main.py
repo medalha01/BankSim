@@ -43,13 +43,12 @@ def transfere(dicContas):
     conta2 = dicContas.get(cod2)
     conta.transfer(conta2, valor)
 
+
 def extrato():
     cod = input().strip
     conta = dicContas.get(cod)
     conta.extrato
-    
-def investe():
-    
+
 
 def operation(hold):
     oper = {
@@ -58,7 +57,7 @@ def operation(hold):
         3: depositar(),
         4: transfere(),
         5: extrato(),
-        6: investe()
+        6: investe(),
     }
     return oper.get(hold)
 
