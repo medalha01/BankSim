@@ -1,6 +1,8 @@
 import secrets
 
 dicInvest = {}
+
+
 class Conta:
     def __init__(self, Cpf, Nome, Senha, Saldo):
         self.Token = secrets.token_bytes(16)
@@ -40,12 +42,31 @@ class Cartao(Conta):
         self.codigo_seg = Codigo_seg
         self.senha_card = Senha_card
 
+    # def Compra():
+
+
+# Pedir senha para todo uso do cartão
+
+
+class Admin(Conta):
+    def __init__(self, Nome, Senha, Cpf):
+        Conta.__init__(self, Cpf, Nome, Senha)
+
+    def saldoMod(self, conta, valor):
+        # pegar codigo e valor no main
+        # transformar em int
+        print("Digite sua senha para realizar a operação:")
+        senha2 = input().strip
+        if self.Senha == senha2:
+            conta.saldo = conta.saldo + valor
+
 
 class Premium(Conta):
     def __init__(self, Cpf, Nome, Senha, Saldo, Carteira):
         Conta.__init__(self, Cpf, Nome, Senha, Saldo)
         self.Carteira = Carteira()
-    def investir(self, Saldo, Carteira):
+
+    def investir(self):
         print(dicInvest)
         nome = input("Selecione o investimento")
         investimento = dicInvest.get(nome)
@@ -53,13 +74,15 @@ class Premium(Conta):
         while Quant > self.Saldo:
             Quant = input("Digite uma quantia valida!")
         if Quant < investimento.custo:
-            print("O valor de entrada é maior que a quantidade desejada que seja investido.")
+            print(
+                "O valor de entrada é maior que a quantidade desejada que seja investido."
+            )
         else:
             invest2 = (nome, Quant)
-            #adicionar depois um sistema de check para caso investimento já exista
+            # adicionar depois um sistema de check para caso investimento já exista
             self.carteira.append(invest2)
             self.Saldo = self.Saldo - Quant
-        
+
 
 class invest(Premium):
     def __init__(self, duration, juros, tipo, custo, mtime):
@@ -77,11 +100,9 @@ class invest(Premium):
         self.custo = input("Digite o custo de entrada:")
         self.mtime = input("Digite o tempo minimo para retirada:")
         dicInvest.update({self.nome: self})
-        #Pedir que seja admin no main para conseguir criar um investimento
+        # Pedir que seja admin no main para conseguir criar um investimento
 
-        
-
-    def interestrate(self, juros, valor):
-        pagamento = valor * juros
+    def interestrate(self, valor):
+        pagamento = valor * self.juros
         return pagamento
-        #fazer o sistema de pagamento no main
+        # fazer o sistema de pagamento no main
