@@ -78,15 +78,29 @@ class Admin(Conta):
             print(f"Este é o token de sua conta {ct}")
             dicContaAdm.update({ct: contaadm})
         elif tipo.lower() in premium:
-            fnfusdhbfsuf = 1
+            # Cpf, Nome, Senha, Saldo, Carteira
+            # sistema de validação no main
+            i1 = "Qual o cpf do dono da conta?"
+            i2 = "Qual o Nome do dona da conta?"
+            i3 = "Qual a senha da conta?"
+            i4 = "Qual o saldo inicial da conta?"
+            contapr = Premium(i1, i2, i3, i4)
+            print(f"Este é o token de sua conta {ct}")
+            dicContaPr.update({ct: contapr})
         elif tipo.lower() in conta:
-            fnfusdhbfsuf = 1
+            i1 = "Qual o cpf do dono da conta?"
+            i2 = "Qual o Nome do dona da conta?"
+            i3 = "Qual a senha da conta?"
+            i4 = "Qual o saldo inicial da conta?"
+            contaUser = Conta(i1, i2, i3, i4)
+            print(f"Este é o token de sua conta {ct}")
+            dicContaUser.update({ct: contaUser})
 
 
 class Premium(Conta):
-    def __init__(self, Cpf, Nome, Senha, Saldo, Carteira):
+    def __init__(self, Cpf, Nome, Senha, Saldo):
         Conta.__init__(self, Cpf, Nome, Senha, Saldo)
-        self.Carteira = Carteira()
+        self.Carteira = ()
 
     def investir(self):
         print(dicInvest)
