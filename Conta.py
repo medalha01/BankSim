@@ -1,7 +1,10 @@
+from audioop import adpcm2lin
 import secrets
 
 dicInvest = {}
-
+dicContaAdm = {}
+dicContaUser = {}
+dicContaPr = {}
 
 class Conta:
     def __init__(self, Cpf, Nome, Senha, Saldo):
@@ -60,6 +63,25 @@ class Admin(Conta):
         if self.Senha == senha2:
             conta.saldo = conta.saldo + valor
 
+    def creatUser(self, tipo):
+        # fazer escolha de tipo no main
+        administrador = ("admin", "administrador", "adm")
+        premium = "premium, pr, prmium, pre, especial, completa"
+        conta = ("conta", "normal", " ", "")
+        ct = secrets.token_bytes(20)
+        if tipo.lower() in administrador:
+            i1 = "Qual o nome do dono da conta?"
+            i2 = "Qual o cpf do dona da conta?"
+            i3 = "Qual a senha da conta?"
+            contaadm = Admin(i1, i3, i2)
+            print(f"Este é o token de sua conta {ct}")
+            dicContaAdm.update({ct:contaadm})
+            
+        elif tipo.lower() in premium:
+            fnfusdhbfsuf = 1
+        elif tipo.lower() in conta:
+            fnfusdhbfsuf = 1
+
 
 class Premium(Conta):
     def __init__(self, Cpf, Nome, Senha, Saldo, Carteira):
@@ -105,4 +127,4 @@ class invest(Premium):
     def interestrate(self, valor):
         pagamento = valor * self.juros
         return pagamento
-        # fazer o sistema de pagamento no main
+        ###fazer o sistema de pagamento no main###
