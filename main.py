@@ -1,73 +1,91 @@
-from Conta import Conta
+from Conta import Conta, dicInvest, dicContaUser,dicContaAdm, Cartao, Premium
 import re
+#fazer menu para menu e sistema de login
 
-dicContas = {}
-
-
-def criar(dicContas):
-    cod = input("Qual o codigo da conta?").strip()
-    cpf = input("Qual o cpf do dono da conta?").strip()
-    nome = input("Qual o nome do dono da conta?").strip()
-    senha = input("Qual a senha da conta?").strip()
-    saldo = input("Qual o saldo inicial da conta?").strip()
-    hold2 = Conta(cpf, nome, senha, saldo)
-    dicContas.update({cod: hold2})
-    return dicContas
-
-
-def sacar(dicContas):
+def sacar(dicContaUser, auxtoken):
     valor = input()
     while valor is not int:
         input("Digite um valor válido")
-    cod = input().strip
-    conta = dicContas.get(cod)
+    conta = dicContaUser.get(auxtoken)
     conta.saque(valor)
 
 
-def depositar(dicContas):
+def depositar(dicContaUser, auxtoken):
     valor = input()
     while valor is not int:
         input("Digite um valor válido")
-    cod = input().strip
-    conta = dicContas.get(cod)
+    conta = dicContaUser.get(auxtoken)
     conta.deposito(valor)
 
 
-def transfere(dicContas):
+def transfere(dicContaUser, auxtoken):
     valor = input()
     while valor is not int:
         input("Digite um valor válido")
-    cod = input().strip
-    conta = dicContas.get(cod)
+    conta = dicContaUser.get(auxtoken)
     cod2 = input().strip
-    conta2 = dicContas.get(cod2)
+    conta2 = dicContaUser.get(cod2)
     conta.transfer(conta2, valor)
 
 
-def extrato():
-    cod = input().strip
-    conta = dicContas.get(cod)
+def extrato(dicContaUser, auxtoken):
+    conta = dicContaUser.get(auxtoken)
     conta.extrato
 
+def investe(dicContaUser,auxtoken):
+    conta = dicContaUser.get(auxtoken)
+    conta.investir()
 
-def operation(hold):
+'''
+def operationUser(hold):
     oper = {
-        1: criar(),
-        2: sacar(),
-        3: depositar(),
-        4: transfere(),
-        5: extrato(),
-        6: investe(),
+        1: sacar(),
+        2: depositar(),
+        3: transfere(),
+        4: extrato(),
     }
     return oper.get(hold)
+'''
+
+'''def OperationPremium(hold):
+    oper = {
+        1: sacar(),
+        2: depositar(),
+        3: transfere(),
+        4: extrato(),
+        5: investe(),
+    }
+    return oper.get(hold)'''
+while True:
+    aux = input("Você deseja logar como:\n 1.Usuario\n 2.Admin\n")
+    if aux in "1":    
+        print(
+            "Bem vindo ao sistema! \nDigite Token e Senha\n "
+        )
+        auxtoken = int(input("Token: ").strip())
+        auxpassword = input("Senha: ").strip()
+        if auxtoken not in dicContaUser or auxpassword not in dicContaUser:
+            print("Token ou senha invalido\n")
+    elif aux in "2":   
+        print(
+            "Bem vindo ao sistema! \nDigite Token e Senha\n"
+        )
+        auxtoken = int(input("Token: ").strip())
+        auxpassword = input("Senha: ").strip()
+        if auxtoken not in dicContaAdm or auxpassword not in dicContaAdm:
+            print("Token ou senha invalido\n")
+    else:
+        aux = input("input invalido")
 
 
+
+ 
 while True:
     print(
         "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
     )
     print(
-        " 1 - Criação de Conta\n 2 - Saque\n 3 - Depósito\n 4 - Transferência\n 5 - Extrato\n 6 - Sair"
+        " 1 - Saque\n  - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Investimento\n 6 - Sair"
     )
     hold = input().strip()
     while hold not in ["1", "2", "3", "4", "5", "6"]:

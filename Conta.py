@@ -1,10 +1,9 @@
 from audioop import adpcm2lin
 import secrets
-
+#atualizar listas, dicionarios em operações,fazer menu, terminar cartão, sistema de arquivo, saldomod
 dicInvest = {}
 dicContaAdm = {}
 dicContaUser = {}
-dicContaPr = {}
 
 
 class Conta:
@@ -14,7 +13,7 @@ class Conta:
         self.senha = Senha
         self.nome = Nome
         self.saldo = Saldo
-        self.historico = ()
+        self.historico = []
 
     def deposito(self, valor):
         self.saldo = self.saldo + valor
@@ -45,8 +44,29 @@ class Cartao(Conta):
         self.numero_card = Numero_card
         self.codigo_seg = Codigo_seg
         self.senha_card = Senha_card
+        self.block = 0
 
-    # def Compra():
+    def Compra(self, valor):
+        if self.block == 1:
+            print("Cartão bloqueado, desbloqueie para efetuar transação")
+        else:
+            if self.saldo >= valor:
+                self.saldo -= valor
+            else:
+                print("Saldo insuficiente")
+    
+    
+    def Bloquear(self):
+        x = input("Deseja bloquear o Cartão? (S/N)").lower()
+        while x not in ("sim", "nao","não" ,"n", "s"):
+            x = input("Deseja bloquear o Cartão? (S/N)").lower()
+        if x in ("sim", "s"):
+            self.block = 1
+        else:
+            self.block = 0
+
+
+
 
 
 # Pedir senha para todo uso do cartão
@@ -71,27 +91,27 @@ class Admin(Conta):
         conta = ("conta", "normal", " ", "")
         ct = secrets.token_bytes(20)
         if tipo.lower() in administrador:
-            i1 = "Qual o nome do dono da conta?"
-            i2 = "Qual o cpf do dona da conta?"
-            i3 = "Qual a senha da conta?"
+            i1 = input("Qual o nome do dono da conta?")
+            i2 = input("Qual o cpf do dona da conta?")
+            i3 = input("Qual a senha da conta?")
             contaadm = Admin(i1, i3, i2)
             print(f"Este é o token de sua conta {ct}")
             dicContaAdm.update({ct: contaadm})
         elif tipo.lower() in premium:
             # Cpf, Nome, Senha, Saldo, Carteira
             # sistema de validação no main
-            i1 = "Qual o cpf do dono da conta?"
-            i2 = "Qual o Nome do dona da conta?"
-            i3 = "Qual a senha da conta?"
-            i4 = "Qual o saldo inicial da conta?"
+            i1 = input("Qual o cpf do dono da conta?")
+            i2 = input("Qual o Nome do dona da conta?")
+            i3 = input("Qual a senha da conta?")
+            i4 = input("Qual o saldo inicial da conta?")
             contapr = Premium(i1, i2, i3, i4)
             print(f"Este é o token de sua conta {ct}")
-            dicContaPr.update({ct: contapr})
+            dicContaUser.update({ct: contapr})
         elif tipo.lower() in conta:
-            i1 = "Qual o cpf do dono da conta?"
-            i2 = "Qual o Nome do dona da conta?"
-            i3 = "Qual a senha da conta?"
-            i4 = "Qual o saldo inicial da conta?"
+            i1 = input("Qual o cpf do dono da conta?")
+            i2 = input("Qual o Nome do dona da conta?")
+            i3 = input("Qual a senha da conta?")
+            i4 = input("Qual o saldo inicial da conta?")
             contaUser = Conta(i1, i2, i3, i4)
             print(f"Este é o token de sua conta {ct}")
             dicContaUser.update({ct: contaUser})
@@ -100,11 +120,13 @@ class Admin(Conta):
 class Premium(Conta):
     def __init__(self, Cpf, Nome, Senha, Saldo):
         Conta.__init__(self, Cpf, Nome, Senha, Saldo)
-        self.Carteira = ()
+        self.Carteira = {}
 
     def investir(self):
         print(dicInvest)
         nome = input("Selecione o investimento")
+        while nome not in dicInvest:
+            nome = input("Selecione um investimento valido")
         investimento = dicInvest.get(nome)
         Quant = input("Quanto deseja investir?")
         while Quant > self.Saldo:
@@ -114,10 +136,16 @@ class Premium(Conta):
                 "O valor de entrada é maior que a quantidade desejada que seja investido."
             )
         else:
-            invest2 = (nome, Quant)
-            # adicionar depois um sistema de check para caso investimento já exista
-            self.carteira.append(invest2)
-            self.Saldo = self.Saldo - Quant
+            invest2 = {nome: Quant}
+            hold = self.Carteira.get(nome)
+            if hold == None:
+                self.Carteira.update(invest2)
+                self.Saldo = self.Saldo - Quant
+            else:
+                hold = hold + Quant
+                self.Carteira.update({nome: hold})
+                self.saldo = self.saldo - Quant
+
 
 
 class invest(Premium):
