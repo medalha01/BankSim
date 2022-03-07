@@ -6,6 +6,7 @@ dicContaAdm = {}
 dicContaUser = {}
 dicContaPr = {}
 
+
 class Conta:
     def __init__(self, Cpf, Nome, Senha, Saldo):
         self.Token = secrets.token_bytes(16)
@@ -75,8 +76,7 @@ class Admin(Conta):
             i3 = "Qual a senha da conta?"
             contaadm = Admin(i1, i3, i2)
             print(f"Este é o token de sua conta {ct}")
-            dicContaAdm.update({ct:contaadm})
-            
+            dicContaAdm.update({ct: contaadm})
         elif tipo.lower() in premium:
             fnfusdhbfsuf = 1
         elif tipo.lower() in conta:
