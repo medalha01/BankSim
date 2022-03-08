@@ -4,8 +4,8 @@ import secrets
 dicInvest = {}
 dicContaAdm = {}
 dicContaUser = {}
-
-
+dicCard = {}
+##Pegar contas do dicionario e devolver elas, nunca chamar aleatoriamente
 class Conta:
     def __init__(self, Cpf, Nome, Senha, Saldo):
         self.Token = secrets.token_bytes(16)
@@ -35,12 +35,15 @@ class Conta:
 
     def transfer(self, destino, valor):
         if self.saldo > valor:
+            destino = dicContaUser.get(destino)
             self.saldo = self.saldo - valor
             destino.saldo = destino.saldo + valor
             dicContaUser.update({self.Token: self})
-            dicContaUser.update({destino.Token: destino @ Conta})
+            dicContaUser.update({destino.Token: destino})
             self.historico.append("Transferencia para {destino}: - {valor}")
             destino.historico.append("Transferencia recebido {self}: + {valor}")
+    
+    #def CriarCard():#
 
 
 class Cartao(Conta):
@@ -120,6 +123,7 @@ class Admin(Conta):
             contaUser = Conta(i1, i2, i3, i4)
             print(f"Este é o token de sua conta {ct}")
             dicContaUser.update({ct: contaUser})
+
 
 ##Fazer atualização da "investir"
 class Premium(Conta):

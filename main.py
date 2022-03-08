@@ -1,7 +1,8 @@
-from Conta import Conta, dicInvest, dicContaUser, dicContaAdm, Cartao, Premium
+from Conta import Conta, dicInvest, dicContaUser, dicContaAdm, Cartao, Premium, dicCard
 import re
 
 # fazer menu para menu e sistema de login
+# python talvez tenha alguma lib facil de usar de sqlite
 
 
 def sacar(dicContaUser, auxtoken):
@@ -42,52 +43,62 @@ def investe(dicContaUser, auxtoken):
     conta.investir()
 
 
-def menuUser(hold):
+# fazer
+def criarCartao(auxtoken):
+    auxtoken
+
+
+def menuUser(auxtoken):
     while True:
         print(
             "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
         )
         print(
-            " 1 - Saque\n  - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Investimento\n 6 - Sair"
+            " 1 - Saque\n  2 - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Criar Cartão \n 6 - Sair"
         )
         hold = input().strip()
         while hold not in ["1", "2", "3", "4", "5", "6"]:
+            hold = input("Digite um input válido").strip()
+        hold = int(hold)
+        if hold == 6:
+            break
+
+    oper = {
+        1: sacar(auxtoken),
+        2: depositar(auxtoken),
+        3: transfere(auxtoken),
+        4: extrato(auxtoken),
+        5: criarCartao(auxtoken),
+    }
+    func = oper.get(hold)
+    func
+
+
+def menuPremium(auxtoken):
+    while True:
+        print(
+            "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
+        )
+        print(
+            " 1 - Saque\n  2 - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Criar Cartão \n 6 - Investir \n 7 - Sair"
+        )
+        hold = input().strip()
+        while hold not in ["1", "2", "3", "4", "5", "6", "7"]:
             hold = input("Digite um input válido").strip()
         hold = int(hold)
         if hold == 7:
             break
 
     oper = {
-        1: sacar(),
-        2: depositar(),
-        3: transfere(),
-        4: extrato(),
+        1: sacar(auxtoken),
+        2: depositar(auxtoken),
+        3: transfere(auxtoken),
+        4: extrato(auxtoken),
+        5: criarCartao(auxtoken),
+        6: investe(auxtoken)
     }
-    return oper.get(hold)
-
-
-def menuPremium(hold):
-    while True:
-        print(
-            "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
-        )
-        print(
-            " 1 - Saque\n  - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Investimento\n 6 - Sair"
-        )
-        hold = input().strip()
-        while hold not in ["1", "2", "3", "4", "5", "6"]:
-            hold = input("Digite um input válido").strip()
-        hold = int(hold)
-        if hold == 7:
-            break
-    oper = {
-        1: sacar(),
-        2: depositar(),
-        3: transfere(),
-        4: extrato(),
-        5: investe(),
-    }
-    return oper.get(hold)
+    func = oper.get(hold)
+    func
 
 
 def menuAdm(hold):
@@ -96,15 +107,15 @@ def menuAdm(hold):
             "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
         )
         print(
-            " 1 - Saque\n  - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Investimento\n 6 - Sair"
+            " 1 - Criar Conta\n 2 - Criar Investimento \n 3 - Deletar Conta \n 4 - Modificar saldo\n 5 - Pagar Juros\n 6 - Sair"
         )
         hold = input().strip()
         while hold not in ["1", "2", "3", "4", "5", "6"]:
             hold = input("Digite um input válido").strip()
         hold = int(hold)
-        if hold == 7:
+        if hold == 6:
             break
-
+##arumar oper
     oper = {
         1: sacar(),
         2: depositar(),
@@ -126,9 +137,9 @@ while True:
         else:
             if auxpassword == token2.senha:
                 if token2.Prem == 1:
-                    menuPremium()
+                    menuPremium(auxtoken)
                 else:
-                    menuUser()
+                    menuUser(auxtoken)
             else:
                 print("Senha invalida")
                 break
@@ -143,7 +154,7 @@ while True:
             print("Token invalido")
         else:
             if auxpassword == token2.senha:
-                menuAdm()
+                menuAdm(auxtoken)
             else:
                 print("Senha invalida")
                 break
