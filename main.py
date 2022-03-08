@@ -1,12 +1,16 @@
-from Conta import Conta, dicInvest, dicContaUser,dicContaAdm, Cartao, Premium
+from Conta import Conta, dicInvest, dicContaUser, dicContaAdm, Cartao, Premium
 import re
-#fazer menu para menu e sistema de login
+
+# fazer menu para menu e sistema de login
+
 
 def sacar(dicContaUser, auxtoken):
     valor = input()
     while valor is not int:
-        input("Digite um valor válido")
+        valor = input("Digite um valor válido")
     conta = dicContaUser.get(auxtoken)
+    if conta == None:
+        auxtoken = input("Conta inválida, digite novamente!")
     conta.saque(valor)
 
 
@@ -32,12 +36,13 @@ def extrato(dicContaUser, auxtoken):
     conta = dicContaUser.get(auxtoken)
     conta.extrato
 
-def investe(dicContaUser,auxtoken):
+
+def investe(dicContaUser, auxtoken):
     conta = dicContaUser.get(auxtoken)
     conta.investir()
 
-'''
-def operationUser(hold):
+
+def menuUser(hold):
     oper = {
         1: sacar(),
         2: depositar(),
@@ -45,9 +50,9 @@ def operationUser(hold):
         4: extrato(),
     }
     return oper.get(hold)
-'''
 
-'''def OperationPremium(hold):
+
+def menuPremium(hold):
     oper = {
         1: sacar(),
         2: depositar(),
@@ -55,21 +60,36 @@ def operationUser(hold):
         4: extrato(),
         5: investe(),
     }
-    return oper.get(hold)'''
+    return oper.get(hold)
+
+
+def menuAdm(hold):
+    oper = {
+        1: sacar(),
+        2: depositar(),
+        3: transfere(),
+        4: extrato(),
+        5: investe(),
+    }
+    return oper.get(hold)
+
+
 while True:
     aux = input("Você deseja logar como:\n 1.Usuario\n 2.Admin\n")
-    if aux in "1":    
-        print(
-            "Bem vindo ao sistema! \nDigite Token e Senha\n "
-        )
+    if aux in "1":
+        print("Bem vindo ao sistema! \nDigite Token e Senha\n ")
         auxtoken = int(input("Token: ").strip())
         auxpassword = input("Senha: ").strip()
-        if auxtoken not in dicContaUser or auxpassword not in dicContaUser:
-            print("Token ou senha invalido\n")
-    elif aux in "2":   
-        print(
-            "Bem vindo ao sistema! \nDigite Token e Senha\n"
-        )
+        token2 = dicContaUser.get(auxtoken)
+        if token2 == None:
+            print("Token invalido")
+        else:
+            if auxpassword == token2.senha:
+                menuUser()
+    ## if auxtoken not in dicContaUser or auxpassword not in dicContaUser:
+    ##    print("Token ou senha invalido\n")
+    elif aux in "2":
+        print("Bem vindo ao sistema! \nDigite Token e Senha\n")
         auxtoken = int(input("Token: ").strip())
         auxpassword = input("Senha: ").strip()
         if auxtoken not in dicContaAdm or auxpassword not in dicContaAdm:
@@ -78,8 +98,6 @@ while True:
         aux = input("input invalido")
 
 
-
- 
 while True:
     print(
         "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
