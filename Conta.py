@@ -1,6 +1,6 @@
-from audioop import adpcm2lin
 import secrets
-#atualizar listas, dicionarios em operações,fazer menu, terminar cartão, sistema de arquivo, saldomod
+
+# atualizar listas, dicionarios em operações,fazer menu, terminar cartão, sistema de arquivo, saldomod
 dicInvest = {}
 dicContaAdm = {}
 dicContaUser = {}
@@ -17,11 +17,13 @@ class Conta:
 
     def deposito(self, valor):
         self.saldo = self.saldo + valor
+        dicContaUser.update({self.Token: self})
         self.historico.append("+ {}".format(valor))
 
     def saque(self, valor):
         if self.saldo > valor:
             self.saldo = self.saldo - valor
+            dicContaUser.update({self.Token: self})
             self.historico.append("- {}".format(valor))
         else:
             print("Saldo Insuficiente")
@@ -34,6 +36,8 @@ class Conta:
         if self.saldo > valor:
             self.saldo = self.saldo - valor
             destino.saldo = destino.saldo + valor
+            dicContaUser.update({self.Token: self})
+            dicContaUser.update({destino.Token: destino @ Conta})
             self.historico.append("Transferencia para {destino}: - {valor}")
             destino.historico.append("Transferencia recebido {self}: + {valor}")
 
@@ -52,21 +56,19 @@ class Cartao(Conta):
         else:
             if self.saldo >= valor:
                 self.saldo -= valor
+                dicContaUser.update({self.Token: self})
+
             else:
                 print("Saldo insuficiente")
-    
-    
+
     def Bloquear(self):
         x = input("Deseja bloquear o Cartão? (S/N)").lower()
-        while x not in ("sim", "nao","não" ,"n", "s"):
+        while x not in ("sim", "nao", "não", "n", "s"):
             x = input("Deseja bloquear o Cartão? (S/N)").lower()
         if x in ("sim", "s"):
             self.block = 1
         else:
             self.block = 0
-
-
-
 
 
 # Pedir senha para todo uso do cartão
@@ -82,7 +84,9 @@ class Admin(Conta):
         print("Digite sua senha para realizar a operação:")
         senha2 = input().strip
         if self.Senha == senha2:
-            conta.saldo = conta.saldo + valor
+            alvo = dicContaUser.get(conta)
+            alvo.saldo = alvo.saldo + valor
+            dicContaUser.update({alvo.Token: alvo})
 
     def creatUser(self, tipo):
         # fazer escolha de tipo no main
@@ -145,7 +149,6 @@ class Premium(Conta):
                 hold = hold + Quant
                 self.Carteira.update({nome: hold})
                 self.saldo = self.saldo - Quant
-
 
 
 class invest(Premium):
