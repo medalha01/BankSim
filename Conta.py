@@ -14,6 +14,7 @@ class Conta:
         self.nome = Nome
         self.saldo = Saldo
         self.historico = []
+        self.Prem = 0
 
     def deposito(self, valor):
         self.saldo = self.saldo + valor
@@ -120,11 +121,12 @@ class Admin(Conta):
             print(f"Este é o token de sua conta {ct}")
             dicContaUser.update({ct: contaUser})
 
-
+##Fazer atualização da "investir"
 class Premium(Conta):
     def __init__(self, Cpf, Nome, Senha, Saldo):
         Conta.__init__(self, Cpf, Nome, Senha, Saldo)
         self.Carteira = {}
+        self.Prem = 1
 
     def investir(self):
         print(dicInvest)
