@@ -11,6 +11,12 @@ from Conta import (
 )
 import re, random
 
+mainatd = Conta("123", "Isac", "060", "10000", "1234")
+dicContaUser.update({"1234": mainatd})
+
+mainatd = Premium("Isac", "123", "060", "12300", "12345")
+dicContaUser.update({"12345": mainatd})
+
 mainadm = Admin("Nome", "Senha", "Cpf", "123")
 dicContaAdm.update({"123": mainadm})
 # fazer menu para menu e sistema de login
@@ -64,8 +70,8 @@ def sacar(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
 
 
 def depositar(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
-    valor = input()
-    while valor is not int:
+    valor = float(input())
+    while valor < 0:
         input("Digite um valor válido")
     conta = dicContaUser.get(auxtoken)
     conta.deposito(valor)
@@ -123,11 +129,11 @@ def criarCartao(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
 def menuUser(auxtoken):
     while True:
         oper = {
-        1: sacar,
-        2: depositar,
-        3: transfere,
-        4: extrato,
-        5: criarCartao,
+            1: sacar,
+            2: depositar,
+            3: transfere,
+            4: extrato,
+            5: criarCartao,
         }
         print(
             "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
@@ -148,12 +154,12 @@ def menuPremium(auxtoken):
 
     while True:
         oper = {
-        1: sacar,
-        2: depositar,
-        3: transfere,
-        4: extrato,
-        5: criarCartao,
-        6: investe,
+            1: sacar,
+            2: depositar,
+            3: transfere,
+            4: extrato,
+            5: criarCartao,
+            6: investe,
         }
         print(
             "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
@@ -171,9 +177,9 @@ def menuPremium(auxtoken):
 
 
 def menuAdm(auxtoken):
-    
+
     while True:
-        
+
         print(
             "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
         )
@@ -185,11 +191,11 @@ def menuAdm(auxtoken):
             hold = input("Digite um input válido").strip()
         hold = int(hold)
         oper = {
-        1: accountCreate,
-        2: investCreate,
-        3: deleteAccount,
-        4: modify,
-        5: payInterest,
+            1: accountCreate,
+            2: investCreate,
+            3: deleteAccount,
+            4: modify,
+            5: payInterest,
         }
         if hold == 6:
             break
@@ -199,7 +205,7 @@ def menuAdm(auxtoken):
 
 while True:
     aux = input("Você deseja logar como:\n 1.Usuario\n 2.Admin\n")
-    if aux in "1":
+    if aux == "1":
         print("Bem vindo ao sistema! \nDigite Token e Senha\n ")
         auxtoken = input("Token: ").strip()
         auxpassword = input("Senha: ").strip()
@@ -218,7 +224,7 @@ while True:
                 print("Senha invalida")
     ## if auxtoken not in dicContaUser or auxpassword not in dicContaUser:
     ##    print("Token ou senha invalido\n")
-    elif aux in "2":
+    elif aux == "2":
         print("Bem vindo ao sistema! \nDigite Token e Senha\n")
         auxtoken = input("Token: ").strip()
         auxpassword = input("Senha: ").strip()

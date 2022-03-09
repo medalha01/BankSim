@@ -17,14 +17,14 @@ class Conta:
         self.token = Token
 
     def deposito(self, valor):
-        self.saldo = self.saldo + valor
-        dicContaUser.update({self.Token: self})
+        self.saldo = float(self.saldo) + int(valor)
+        dicContaUser.update({self.token: self})
         self.historico.append("+ {}".format(valor))
 
     def saque(self, valor):
-        if self.saldo >= valor:
-            self.saldo = self.saldo - valor
-            dicContaUser.update({self.Token: self})
+        if int(self.saldo) >= int(valor):
+            self.saldo = float(self.saldo) - valor
+            dicContaUser.update({self.token: self})
             self.historico.append("- {}".format(valor))
         else:
             print("Saldo Insuficiente")
@@ -38,15 +38,15 @@ class Conta:
             destino = dicContaUser.get(destino)
             self.saldo = self.saldo - valor
             destino.saldo = destino.saldo + valor
-            dicContaUser.update({self.Token: self})
-            dicContaUser.update({destino.Token: destino})
+            dicContaUser.update({self.token: self})
+            dicContaUser.update({destino.token: destino})
             self.historico.append("Transferencia para {destino}: - {valor}")
             destino.historico.append("Transferencia recebido {self}: + {valor}")
 
     # def CriarCard():#
 
 
-class Cartao(Conta):
+class Cartao:
     def __init__(self, Limite_trans, Numero_card, Codigo_seg, Senha_card, Token):
         self.limite_trans = Limite_trans
         self.numero_card = Numero_card
@@ -88,15 +88,14 @@ class Admin(Conta):
         # transformar em int
         senha2 = input("Digite senha do usuario para realizar a operação:").strip()
         if self.senha == senha2:
-            alvo = dicContaUser.get(conta)          
+            alvo = dicContaUser.get(conta)
             while alvo.saldo + valor < 0:
                 valor = float(input("digite um valor valido de operação:\n"))
             alvo.saldo = alvo.saldo + valor
             dicContaUser.update({alvo.Token: alvo})
         else:
             senha2 = input("senha invalida, tente novamente:").strip()
-    
-    
+
     def investCreation(self):
         nome = input("Digite o nome do investimento:")
         duration = input("Digite a duração máxima do investimento:")
@@ -106,7 +105,6 @@ class Admin(Conta):
         mtime = input("Digite o tempo minimo para retirada:")
         investimento = invest(duration, juros, tipo, custo, mtime)
         dicInvest.update({nome: investimento})
-
 
     def creatUser(self, tipo):
         # fazer escolha de tipo no main
@@ -128,7 +126,7 @@ class Admin(Conta):
             i1 = input("Qual o cpf do dono da conta?")
             i2 = input("Qual o Nome do dona da conta?")
             i3 = input("Qual a senha da conta?")
-            i4 = input("Qual o saldo inicial da conta?")
+            i4 = float(input("Qual o saldo inicial da conta?"))
             contapr = Premium(i1, i2, i3, i4, ct)
             print(f"Este é o token de sua conta {ct}")
             dicContaUser.update({ct: contapr})
@@ -136,7 +134,7 @@ class Admin(Conta):
             i1 = input("Qual o cpf do dono da conta?")
             i2 = input("Qual o Nome do dona da conta?")
             i3 = input("Qual a senha da conta?")
-            i4 = input("Qual o saldo inicial da conta?")
+            i4 = float(input("Qual o saldo inicial da conta?"))
             contaUser = Conta(i1, i2, i3, i4, ct)
             print(f"Este é o token de sua conta {ct}")
             dicContaUser.update({ct: contaUser})
@@ -197,5 +195,4 @@ class invest(Premium):
                         x.saldo += pagamento
                         dicContaUser.update({tokenalvo: x})
 
-        
         ###fazer o sistema de pagamento no main###
