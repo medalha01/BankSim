@@ -74,6 +74,20 @@ def sacar(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     conta.saque(valor)
 
 
+def imprimircartao(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
+    x = dicCard.get(auxtoken)
+    print("Seu cartão é:")
+    print(x)
+
+
+def compracard(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
+    x = dicCard.get(auxtoken)
+    y = dicContaUser.get(auxtoken)
+    inp = float(input("Digite o valor da compra"))
+    y.saldo = float(y.saldo) - inp
+    dicContaUser.update({y.token: y})
+
+
 def depositar(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     valor = float(input("Digite o valor para deposito: "))
     while valor < 0:
@@ -140,15 +154,17 @@ def menuUser(auxtoken):
             4: extrato,
             5: criarCartao,
             6: mudarsenhaa,
+            7: imprimircartao,
+            8: compracard,
         }
         print(
             "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
         )
         print(
-            " 1 - Saque\n  2 - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Criar Cartão \n 6 - Mudar Senha \n 7 - Sair"
+            " 1 - Saque\n  2 - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Criar Cartão \n 6 - Mudar Senha \n 7 - Dados do Cartão \n 8 - Compra cartão \n 9 - Sair"
         )
         hold = input().strip()
-        while hold not in ["1", "2", "3", "4", "5", "6", "7"]:
+        while hold not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]:
             hold = input("Digite um input válido").strip()
         hold = int(hold)
         if hold == 7:
@@ -165,17 +181,19 @@ def menuPremium(auxtoken):
             3: transfere,
             4: extrato,
             5: criarCartao,
-            6: investe,
-            7: mudarsenhaa,
+            6: mudarsenhaa,
+            7: imprimircartao,
+            8: compracard,
+            9: investe,
         }
         print(
             "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
         )
         print(
-            " 1 - Saque\n  2 - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Criar Cartão \n 6 - Investir \n 7 - Mudar Senha \n 8 -Sair"
+            " 1 - Saque\n  2 - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Criar Cartão \n 6 - Mudar Senha \n 7 - Dados do Cartão \n 8 - Compra cartão \n 9 - Investir \n 10 - Sair"
         )
         hold = input().strip()
-        while hold not in ["1", "2", "3", "4", "5", "6", "7", "8"]:
+        while hold not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]:
             hold = input("Digite um input válido").strip()
         hold = int(hold)
         if hold == 8:
