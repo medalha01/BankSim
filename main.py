@@ -17,7 +17,7 @@ dicContaAdm.update({123: mainadm})
 # python talvez tenha alguma lib facil de usar de sqlite
 
 ##"    1: accountCreate(),2: investCreate(),3: deleteAccount(), 4: modify(), 5: payinterest(),###
-def accountCreate(auxtoken):
+def accountCreate(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     pool = ["admin", "normal", "premium"]
     print(f"Qual tipo de conta você deseja criar? \n {pool}")
     adm = dicContaAdm.get(auxtoken)
@@ -27,17 +27,17 @@ def accountCreate(auxtoken):
     adm.creatUser(tipo)
 
 
-def investCreate(auxtoken):
+def investCreate(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     adm = dicContaAdm.get(auxtoken)
     adm.investCreation()
 
 
-def deleteAccount():
+def deleteAccount(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     tokenalvo = input(("qual a conta(token) que será deletada?\n "))
     dicContaUser.pop(tokenalvo)
 
 
-def modify(auxtoken):
+def modify(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     adm = dicContaAdm.get(auxtoken)
     conta = input(("qual a conta(token) que será modificada?\n "))
     print("em quantos será alterado o saldo?\n")
@@ -45,7 +45,7 @@ def modify(auxtoken):
     adm.saldoMod(conta, valor)
 
 
-def payInterest(dicInvest):
+def payInterest(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     investname = input("digite o investimento")
     while investname not in dicInvest:
         investname = input("digite investimento valido")
@@ -53,7 +53,7 @@ def payInterest(dicInvest):
     aux.intestrate(investname)
 
 
-def sacar(dicContaUser, auxtoken):
+def sacar(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     valor = input()
     while valor is not int:
         valor = input("Digite um valor válido")
@@ -63,7 +63,7 @@ def sacar(dicContaUser, auxtoken):
     conta.saque(valor)
 
 
-def depositar(dicContaUser, auxtoken):
+def depositar(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     valor = input()
     while valor is not int:
         input("Digite um valor válido")
@@ -71,7 +71,7 @@ def depositar(dicContaUser, auxtoken):
     conta.deposito(valor)
 
 
-def transfere(dicContaUser, auxtoken):
+def transfere(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     valor = input()
     while valor is not int:
         input("Digite um valor válido")
@@ -81,18 +81,18 @@ def transfere(dicContaUser, auxtoken):
     conta.transfer(conta2, valor)
 
 
-def extrato(dicContaUser, auxtoken):
+def extrato(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     conta = dicContaUser.get(auxtoken)
     conta.extrato
 
 
-def investe(dicContaUser, auxtoken):
+def investe(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     conta = dicContaUser.get(auxtoken)
     conta.investir()
 
 
 # feito
-def criarCartao(auxtoken):
+def criarCartao(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     #    def __init__(self, Limite_trans, Numero_card, Codigo_seg, Senha_card, Token):
     j1 = input("Qual o limite do cartão?")
     j2 = (
@@ -123,13 +123,12 @@ def criarCartao(auxtoken):
 def menuUser(auxtoken):
     while True:
         oper = {
-            1: sacar(dicContaUser ,auxtoken),
-            2: depositar(dicContaUser, auxtoken),
-            3: transfere(dicContaUser, auxtoken),
-            4: extrato(dicContaUser, auxtoken),
-            5: criarCartao(auxtoken),
+        1: sacar,
+        2: depositar,
+        3: transfere,
+        4: extrato,
+        5: criarCartao,
         }
-
         print(
             "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
         )
@@ -146,15 +145,16 @@ def menuUser(auxtoken):
 
 
 def menuPremium(auxtoken):
-    oper = {
-        1: sacar(dicContaUser, auxtoken),
-        2: depositar(dicContaUser, auxtoken),
-        3: transfere(dicContaUser, auxtoken),
-        4: extrato(dicContaUser, auxtoken),
-        5: criarCartao(auxtoken),
-        6: investe(dicContaUser, auxtoken),
-    }
+
     while True:
+        oper = {
+        1: sacar,
+        2: depositar,
+        3: transfere,
+        4: extrato,
+        5: criarCartao,
+        6: investe,
+        }
         print(
             "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
         )
@@ -170,15 +170,10 @@ def menuPremium(auxtoken):
         return oper.get(hold)
 
 
-def menuAdm(hold):
-    oper = {
-        1: accountCreate(auxtoken),
-        2: investCreate(auxtoken),
-        3: deleteAccount(),
-        4: modify(auxtoken),
-        5: payInterest(dicInvest),
-    }
+def menuAdm(auxtoken):
+    
     while True:
+        
         print(
             "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
         )
@@ -189,6 +184,13 @@ def menuAdm(hold):
         while hold not in ["1", "2", "3", "4", "5", "6"]:
             hold = input("Digite um input válido").strip()
         hold = int(hold)
+        oper = {
+        1: accountCreate,
+        2: investCreate,
+        3: deleteAccount,
+        4: modify,
+        5: payInterest,
+        }
         if hold == 6:
             break
         return oper.get(hold)
@@ -207,9 +209,11 @@ while True:
         else:
             if auxpassword == token2.senha:
                 if token2.Prem == 1:
-                    menuPremium(auxtoken)
+                    x = menuPremium(auxtoken)
+                    x(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm)
                 else:
-                    menuUser(auxtoken)
+                    x = menuUser(auxtoken)
+                    x(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm)
             else:
                 print("Senha invalida")
                 break
@@ -224,7 +228,8 @@ while True:
             print("Token invalido")
         else:
             if auxpassword == token2.senha:
-                menuAdm(auxtoken)
+                x = menuAdm(auxtoken)
+                x(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm)
             else:
                 print("Senha invalida")
                 break

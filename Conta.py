@@ -95,7 +95,17 @@ class Admin(Conta):
             dicContaUser.update({alvo.Token: alvo})
         else:
             senha2 = input("senha invalida, tente novamente:").strip()
-
+    
+    
+    def investCreation(self):
+        nome = input("Digite o nome do investimento:")
+        duration = input("Digite a duração máxima do investimento:")
+        juros = input("Digite os juros:")
+        tipo = input("Digite o tipo de investimento:")
+        custo = input("Digite o custo de entrada:")
+        mtime = input("Digite o tempo minimo para retirada:")
+        investimento = invest(duration, juros, tipo, custo, mtime)
+        dicInvest.update({nome: investimento})
 
 
     def creatUser(self, tipo):
@@ -171,15 +181,6 @@ class invest(Premium):
         self.custo = custo
         self.mtime = mtime
 
-    def investCreation(self):
-        nome = input("Digite o nome do investimento:")
-        duration = input("Digite a duração máxima do investimento:")
-        juros = input("Digite os juros:")
-        tipo = input("Digite o tipo de investimento:")
-        custo = input("Digite o custo de entrada:")
-        mtime = input("Digite o tempo minimo para retirada:")
-        investimento = invest(duration, juros, tipo, custo, mtime)
-        dicInvest.update({nome: investimento})
         # Pedir que seja admin no main para conseguir criar um investimento
 
     def interestrate(self, investname):
