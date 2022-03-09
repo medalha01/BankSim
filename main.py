@@ -96,6 +96,14 @@ def criarCartao(auxtoken):
 
 def menuUser(auxtoken):
     while True:
+        oper = {
+            1: sacar(auxtoken),
+            2: depositar(auxtoken),
+            3: transfere(auxtoken),
+            4: extrato(auxtoken),
+            5: criarCartao(auxtoken),
+        }
+
         print(
             "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
         )
@@ -109,16 +117,17 @@ def menuUser(auxtoken):
         if hold == 6:
             break
         return oper.get(hold)
+
+
+def menuPremium(auxtoken):
     oper = {
         1: sacar(auxtoken),
         2: depositar(auxtoken),
         3: transfere(auxtoken),
         4: extrato(auxtoken),
         5: criarCartao(auxtoken),
+        6: investe(auxtoken),
     }
-
-
-def menuPremium(auxtoken):
     while True:
         print(
             "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
@@ -133,17 +142,16 @@ def menuPremium(auxtoken):
         if hold == 7:
             break
         return oper.get(hold)
-    oper = {
-        1: sacar(auxtoken),
-        2: depositar(auxtoken),
-        3: transfere(auxtoken),
-        4: extrato(auxtoken),
-        5: criarCartao(auxtoken),
-        6: investe(auxtoken),
-    }
 
 
 def menuAdm(hold):
+    oper = {
+        1: accountCreate(auxtoken),
+        2: investCreate(),
+        3: deleteAccount(),
+        4: modify(),
+        5: payinterest(),
+    }
     while True:
         print(
             "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
@@ -159,13 +167,6 @@ def menuAdm(hold):
             break
         return oper.get(hold)
     ##arumar oper
-    oper = {
-        1: accountCreate(auxtoken),
-        2: investCreate(),
-        3: deleteAccount(),
-        4: modify(),
-        5: payinterest(),
-    }
 
 
 while True:
