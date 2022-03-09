@@ -54,8 +54,8 @@ def payInterest(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
 
 
 def sacar(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
-    valor = input()
-    while valor is not int:
+    valor = float(input("digite o valor de saque"))
+    while valor < 0:
         valor = input("Digite um valor válido")
     conta = dicContaUser.get(auxtoken)
     if conta == None:
