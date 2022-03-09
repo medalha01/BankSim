@@ -36,15 +36,15 @@ class Conta:
         print(f"Seu Saldo é de:{self.saldo}\n")
         print(self.historico)
 
-    def transfer(self, destino, valor):
+    def transfer(self, cod2, valor):
         if float(self.saldo) >= float(valor):
-            destino = dicContaUser.get(destino)
+            destino = dicContaUser.get(cod2)
             self.saldo = float(self.saldo) - float(valor)
             destino.saldo = float(destino.saldo) + float(valor)
             dicContaUser.update({self.token: self})
             dicContaUser.update({destino.token: destino})
-            self.historico.append("Transferencia para {destino}: - {valor}")
-            destino.historico.append("Transferencia recebido {self}: + {valor}")
+            self.historico.append(f"Transferencia para {destino.token}: - {valor}")
+            destino.historico.append(f"Transferencia recebido {self.token}: + {valor}")
             print(f"Seu Saldo é de:{self.saldo}\n")
 
     def mudarsenha(self):
