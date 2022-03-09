@@ -165,7 +165,12 @@ class Premium(Conta):
         Conta.__init__(self, Cpf, Nome, Senha, Saldo, Token)
         self.Carteira = {}
         self.Prem = 1
-
+        
+    def extrato(self):
+        print(f"Seu Saldo é de:{self.saldo}\n")
+        print(self.historico)
+        print(f"Sua carteira é {self.Carteira}\n")
+        
     def investir(self):
         print(dicInvest)
         nome = input("Selecione o investimento")
