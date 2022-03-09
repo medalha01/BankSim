@@ -1,8 +1,28 @@
-from Conta import Conta, dicInvest, dicContaUser, dicContaAdm, Cartao, Premium, dicCard
-import re
+from Conta import (
+    Conta,
+    dicInvest,
+    dicContaUser,
+    dicContaAdm,
+    Cartao,
+    Premium,
+    dicCard,
+    Admin,
+    invest,
+)
+import re, random
 
 # fazer menu para menu e sistema de login
 # python talvez tenha alguma lib facil de usar de sqlite
+
+##"    1: accountCreate(),2: investCreate(),3: deleteAccount(), 4: modify(), 5: payinterest(),###
+def accountCreat(auxtoken):
+    pool = ["admin", "normal", "premium"]
+    print(f"Qual tipo de conta você deseja criar? \n {pool}")
+    adm = dicContaAdm.get(auxtoken)
+    tipo = input()
+    while tipo not in pool:
+        tipo = input("Tente novamente")
+    adm.creatUser(tipo)
 
 
 def sacar(dicContaUser, auxtoken):
@@ -43,9 +63,33 @@ def investe(dicContaUser, auxtoken):
     conta.investir()
 
 
-# fazer
+# feito
 def criarCartao(auxtoken):
-    auxtoken
+    #    def __init__(self, Limite_trans, Numero_card, Codigo_seg, Senha_card, Token):
+    j1 = input("Qual o limite do cartão?")
+    j2 = (
+        str(random.randrange(9))
+        + str(random.randrange(9))
+        + str(random.randrange(9))
+        + str(random.randrange(9))
+        + str(random.randrange(9))
+        + str(random.randrange(9))
+        + str(random.randrange(9))
+        + str(random.randrange(9))
+        + str(random.randrange(9))
+        + str(random.randrange(9))
+        + str(random.randrange(9))
+        + str(random.randrange(9))
+        + str(random.randrange(9))
+        + str(random.randrange(9))
+        + str(random.randrange(9))
+        + str(random.randrange(9))
+    )
+    j3 = str(random.randrange(9)) + str(random.randrange(9)) + str(random.randrange(9))
+    j4 = input("Digite a senha do cartão")
+    Token = auxtoken
+    Cartao = Cartao(j1, j2, j3, j4, Token)
+    dicCard.update({Token: Cartao})
 
 
 def menuUser(auxtoken):
@@ -95,7 +139,7 @@ def menuPremium(auxtoken):
         3: transfere(auxtoken),
         4: extrato(auxtoken),
         5: criarCartao(auxtoken),
-        6: investe(auxtoken)
+        6: investe(auxtoken),
     }
     func = oper.get(hold)
     func
@@ -115,12 +159,13 @@ def menuAdm(hold):
         hold = int(hold)
         if hold == 6:
             break
-##arumar oper
+    ##arumar oper
     oper = {
-        1: sacar(),
-        2: depositar(),
-        3: transfere(),
-        4: extrato(),
+        1: accountCreate(auxtoken),
+        2: investCreate(),
+        3: deleteAccount(),
+        4: modify(),
+        5: payinterest(),
     }
     return oper.get(hold)
 

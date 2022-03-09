@@ -42,16 +42,17 @@ class Conta:
             dicContaUser.update({destino.Token: destino})
             self.historico.append("Transferencia para {destino}: - {valor}")
             destino.historico.append("Transferencia recebido {self}: + {valor}")
-    
-    #def CriarCard():#
+
+    # def CriarCard():#
 
 
 class Cartao(Conta):
-    def __init__(self, Limite_trans, Numero_card, Codigo_seg, Senha_card):
+    def __init__(self, Limite_trans, Numero_card, Codigo_seg, Senha_card, Token):
         self.limite_trans = Limite_trans
         self.numero_card = Numero_card
         self.codigo_seg = Codigo_seg
         self.senha_card = Senha_card
+        self.token = Token
         self.block = 0
 
     def Compra(self, valor):
