@@ -104,9 +104,9 @@ def transfere(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     while valor <= 0:
         input("Digite um valor válido")
     conta = dicContaUser.get(auxtoken)
-    cod2 = input("Especifique o token do alvo").strip
+    cod2 = input("Especifique o token do alvo").strip()
     conta2 = dicContaUser.get(cod2)
-    conta.transfer(conta2, valor)
+    conta.transfer(cod2, valor)
 
 
 def extrato(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
