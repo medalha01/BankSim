@@ -27,6 +27,34 @@ def accountCreate(auxtoken):
     adm.creatUser(tipo)
 
 
+def investCreate(auxtoken):
+    adm = dicContaAdm.get(auxtoken)
+    adm.investCreation()
+
+
+def deleteAccount(auxtoken):
+    adm = dicContaAdm.get(auxtoken)
+    tokenalvo = input(("qual a conta(token) que será deletada?\n "))
+    dicContaUser.pop(tokenalvo)
+
+
+def modify(auxtoken):
+    adm = dicContaAdm.get(auxtoken)
+    conta = input(("qual a conta(token) que será modificada?\n "))
+    print("em quantos será alterado o saldo?\n")
+    valor = float(input())
+    adm.saldoMod(conta, valor)
+
+
+def payInterest():
+    adm = dicContaAdm.get(auxtoken)
+    investname = input("digite o investimento")
+    while investname not in dicInvest:
+        investname = input("digite investimento valido")
+    aux = dicInvest.get(investname)
+    aux.intestrate(investname)
+
+
 def sacar(dicContaUser, auxtoken):
     valor = input()
     while valor is not int:
@@ -150,7 +178,7 @@ def menuAdm(hold):
         2: investCreate(),
         3: deleteAccount(),
         4: modify(),
-        5: payinterest(),
+        5: payInterest(),
     }
     while True:
         print(
