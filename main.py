@@ -11,7 +11,7 @@ from Conta import (
 )
 import re, random
 
-mainadm = Admin("Nome", "Senha", "Cpf")
+mainadm = Admin("Nome", "Senha", "Cpf", 123)
 dicContaAdm.update({123: mainadm})
 # fazer menu para menu e sistema de login
 # python talvez tenha alguma lib facil de usar de sqlite
@@ -32,8 +32,7 @@ def investCreate(auxtoken):
     adm.investCreation()
 
 
-def deleteAccount(auxtoken):
-    adm = dicContaAdm.get(auxtoken)
+def deleteAccount():
     tokenalvo = input(("qual a conta(token) que será deletada?\n "))
     dicContaUser.pop(tokenalvo)
 
@@ -46,8 +45,7 @@ def modify(auxtoken):
     adm.saldoMod(conta, valor)
 
 
-def payInterest():
-    adm = dicContaAdm.get(auxtoken)
+def payInterest(dicInvest):
     investname = input("digite o investimento")
     while investname not in dicInvest:
         investname = input("digite investimento valido")
@@ -125,10 +123,10 @@ def criarCartao(auxtoken):
 def menuUser(auxtoken):
     while True:
         oper = {
-            1: sacar(auxtoken),
-            2: depositar(auxtoken),
-            3: transfere(auxtoken),
-            4: extrato(auxtoken),
+            1: sacar(dicContaUser ,auxtoken),
+            2: depositar(dicContaUser, auxtoken),
+            3: transfere(dicContaUser, auxtoken),
+            4: extrato(dicContaUser, auxtoken),
             5: criarCartao(auxtoken),
         }
 
@@ -149,12 +147,12 @@ def menuUser(auxtoken):
 
 def menuPremium(auxtoken):
     oper = {
-        1: sacar(auxtoken),
-        2: depositar(auxtoken),
-        3: transfere(auxtoken),
-        4: extrato(auxtoken),
+        1: sacar(dicContaUser, auxtoken),
+        2: depositar(dicContaUser, auxtoken),
+        3: transfere(dicContaUser, auxtoken),
+        4: extrato(dicContaUser, auxtoken),
         5: criarCartao(auxtoken),
-        6: investe(auxtoken),
+        6: investe(dicContaUser, auxtoken),
     }
     while True:
         print(
@@ -175,10 +173,10 @@ def menuPremium(auxtoken):
 def menuAdm(hold):
     oper = {
         1: accountCreate(auxtoken),
-        2: investCreate(),
+        2: investCreate(auxtoken),
         3: deleteAccount(),
-        4: modify(),
-        5: payInterest(),
+        4: modify(auxtoken),
+        5: payInterest(dicInvest),
     }
     while True:
         print(
