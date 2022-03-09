@@ -69,13 +69,14 @@ class Cartao:
         if self.block == 1:
             print("Cartão bloqueado, desbloqueie para efetuar transação")
         else:
-            if float(self.saldo) >= float(valor):
-                self.saldo -= float(valor)
-                self.historico.append(
-                    "Transação realizada {self.numero_card}: + {valor}"
-                )
-                dicContaUser.update({self.Token: self})
-                listCardHist.append(self.Numero_card, self.historico)
+            x = dicContaUser.get(self.token)
+            if float(x.saldo) >= float(valor):
+                x.saldo = float(x.saldo) - float(valor)
+                conta = self.numero_card
+                nage = valor
+                x.historico.append("Transação realizada %s : %d" % (conta, nage))
+                dicContaUser.update({x.token: x})
+                listCardHist.append(valor)
             else:
                 print("Saldo insuficiente")
 
@@ -91,7 +92,7 @@ class Cartao:
 
 class transactions(Cartao):
     def __init__(self, Limite_trans, Numero_card, Codigo_seg, Senha_card, Token):
-        Conta.__init__(self, Limite_trans, Numero_card, Codigo_seg, Senha_card, Token)
+        Cartao.__init__(self, Limite_trans, Numero_card, Codigo_seg, Senha_card, Token)
         self.historico = []
 
 
@@ -120,8 +121,8 @@ class Admin(Conta):
         duration = int(input("Digite a duração máxima do investimento:"))
         juros = float(input("Digite os juros:"))
         tipo = input("Digite o tipo de investimento:")
-        custo = float(input("Digite o custo de entrada:"))
-        mtime = int(input("Digite o tempo minimo para retirada:"))
+        custo = input("Digite o custo de entrada:")
+        mtime = input("Digite o tempo minimo para retirada:")
         investimento = invest(duration, juros, tipo, custo, mtime)
         dicInvest.update({nome: investimento})
 
@@ -165,15 +166,15 @@ class Premium(Conta):
         Conta.__init__(self, Cpf, Nome, Senha, Saldo, Token)
         self.Carteira = {}
         self.Prem = 1
-        
+
     def extrato(self):
         print(f"Seu Saldo é de:{self.saldo}\n")
         print(self.historico)
         print(f"Sua carteira é {self.Carteira}\n")
-        
+
     def investir(self):
         print(dicInvest)
-        nome = input("Selecione o investimento: ")
+        nome = input("Selecione o investimento")
         while nome not in dicInvest:
             nome = input("Selecione um investimento valido: ")
         investimento = dicInvest.get(nome)
@@ -191,13 +192,13 @@ class Premium(Conta):
                 self.Carteira.update(invest2)
                 self.saldo = self.saldo - Quant
                 print(f"Seu Saldo é de:{self.saldo}\n")
-
+                dicContaUser.update({self.token: self})
             else:
                 hold = hold + Quant
                 self.Carteira.update({nome: hold})
                 self.saldo = self.saldo - Quant
                 print(f"Seu Saldo é de:{self.saldo}\n")
-
+                dicContaUser.update({self.token: self})
 
 
 class invest(Premium):
@@ -214,7 +215,7 @@ class invest(Premium):
         for x in dicContaUser.values():
             if x.Prem == 1:
                 carteira = x.Carteira
-                tokenalvo = x.token
+                tokenalvo = x.Token
                 for i in carteira.keys():
                     if investname == i:
                         valor = carteira.get(investname)

@@ -60,7 +60,7 @@ def payInterest(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     while investname not in dicInvest:
         investname = input("digite investimento valido: ")
     aux = dicInvest.get(investname)
-    aux.interestrate(investname)
+    aux.intestrate(investname)
 
 
 def mudarsenhaa(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
@@ -80,16 +80,15 @@ def sacar(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
 
 def imprimircartao(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     x = dicCard.get(auxtoken)
-    print("Seu cartão é:")
-    print(x)
+    print("Seu cartão é: ")
+    print(x.numero_card)
+    print(x.codigo_seg)
 
 
 def compracard(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     x = dicCard.get(auxtoken)
-    y = dicContaUser.get(auxtoken)
-    inp = float(input("Digite o valor da compra"))
-    y.saldo = float(y.saldo) - inp
-    dicContaUser.update({y.token: y})
+    Valor = float(input("De quanto é o valor da compra: "))
+    x.Compra(Valor)
 
 
 def depositar(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
@@ -171,7 +170,7 @@ def menuUser(auxtoken):
         while hold not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]:
             hold = input("Digite um input válido").strip()
         hold = int(hold)
-        if hold == 7:
+        if hold == 9:
             break
         return oper.get(hold)
 
@@ -200,7 +199,7 @@ def menuPremium(auxtoken):
         while hold not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]:
             hold = input("Digite um input válido").strip()
         hold = int(hold)
-        if hold == 8:
+        if hold == 10:
             break
         return oper.get(hold)
 
