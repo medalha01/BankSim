@@ -59,10 +59,15 @@ def payInterest(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     aux.intestrate(investname)
 
 
+def mudarsenhaa(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
+    usuario = dicContaUser.get(auxtoken)
+    usuario.mudarsenha()
+
+
 def sacar(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
-    valor = float(input("digite o valor de saque"))
+    valor = float(input("Digite o valor de saque: "))
     while valor < 0:
-        valor = input("Digite um valor válido")
+        valor = float(input("Digite um valor válido"))
     conta = dicContaUser.get(auxtoken)
     if conta == None:
         auxtoken = input("Conta inválida, digite novamente!")
@@ -70,26 +75,26 @@ def sacar(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
 
 
 def depositar(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
-    valor = float(input())
+    valor = float(input("Digite o valor para deposito: "))
     while valor < 0:
-        input("Digite um valor válido")
+        valor = float(input("Digite um valor válido"))
     conta = dicContaUser.get(auxtoken)
     conta.deposito(valor)
 
 
 def transfere(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
-    valor = input()
-    while valor is not int:
+    valor = float(input("Digite o valor que vai transferir"))
+    while valor <= 0:
         input("Digite um valor válido")
     conta = dicContaUser.get(auxtoken)
-    cod2 = input().strip
+    cod2 = input("Especifique o token do alvo").strip
     conta2 = dicContaUser.get(cod2)
     conta.transfer(conta2, valor)
 
 
 def extrato(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     conta = dicContaUser.get(auxtoken)
-    conta.extrato
+    conta.extrato()
 
 
 def investe(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
@@ -134,18 +139,19 @@ def menuUser(auxtoken):
             3: transfere,
             4: extrato,
             5: criarCartao,
+            6: mudarsenhaa,
         }
         print(
             "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
         )
         print(
-            " 1 - Saque\n  2 - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Criar Cartão \n 6 - Sair"
+            " 1 - Saque\n  2 - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Criar Cartão \n 6 - Mudar Senha \n 7 - Sair"
         )
         hold = input().strip()
-        while hold not in ["1", "2", "3", "4", "5", "6"]:
+        while hold not in ["1", "2", "3", "4", "5", "6", "7"]:
             hold = input("Digite um input válido").strip()
         hold = int(hold)
-        if hold == 6:
+        if hold == 7:
             break
         return oper.get(hold)
 
@@ -160,18 +166,19 @@ def menuPremium(auxtoken):
             4: extrato,
             5: criarCartao,
             6: investe,
+            7: mudarsenhaa,
         }
         print(
             "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
         )
         print(
-            " 1 - Saque\n  2 - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Criar Cartão \n 6 - Investir \n 7 - Sair"
+            " 1 - Saque\n  2 - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Criar Cartão \n 6 - Investir \n 7 - Mudar Senha \n 8 -Sair"
         )
         hold = input().strip()
-        while hold not in ["1", "2", "3", "4", "5", "6", "7"]:
+        while hold not in ["1", "2", "3", "4", "5", "6", "7", "8"]:
             hold = input("Digite um input válido").strip()
         hold = int(hold)
-        if hold == 7:
+        if hold == 8:
             break
         return oper.get(hold)
 

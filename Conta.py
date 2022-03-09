@@ -17,31 +17,40 @@ class Conta:
         self.token = Token
 
     def deposito(self, valor):
-        self.saldo = float(self.saldo) + int(valor)
-        dicContaUser.update({self.token: self})
+        self.saldo = float(self.saldo) + float(valor)
         self.historico.append("+ {}".format(valor))
+        dicContaUser.update({self.token: self})
+        print(f"Seu Saldo é de:{self.saldo}\n")
 
     def saque(self, valor):
-        if int(self.saldo) >= int(valor):
+        if float(self.saldo) >= float(valor):
             self.saldo = float(self.saldo) - valor
-            dicContaUser.update({self.token: self})
             self.historico.append("- {}".format(valor))
+            dicContaUser.update({self.token: self})
+            print(f"Seu Saldo é de:{self.saldo}\n")
         else:
             print("Saldo Insuficiente")
 
     def extrato(self):
-        print("Seu Saldo é de:", self.saldo, "\n")
+        print(f"Seu Saldo é de:{self.saldo}\n")
         print(self.historico)
 
     def transfer(self, destino, valor):
-        if self.saldo >= valor:
+        if float(self.saldo) >= float(valor):
             destino = dicContaUser.get(destino)
-            self.saldo = self.saldo - valor
-            destino.saldo = destino.saldo + valor
+            self.saldo = float(self.saldo) - float(valor)
+            destino.saldo = float(destino.saldo) + float(valor)
             dicContaUser.update({self.token: self})
             dicContaUser.update({destino.token: destino})
             self.historico.append("Transferencia para {destino}: - {valor}")
             destino.historico.append("Transferencia recebido {self}: + {valor}")
+            print(f"Seu Saldo é de:{self.saldo}\n")
+
+    def mudarsenha(self):
+        l = input("Qual a nova senha que você deseja?").strip()
+        self.senha = l
+        print(f"Senha atualizada, sua nova senha agora é {l}")
+        dicContaUser.update({self.token: self})
 
     # def CriarCard():#
 
@@ -59,8 +68,8 @@ class Cartao:
         if self.block == 1:
             print("Cartão bloqueado, desbloqueie para efetuar transação")
         else:
-            if self.saldo >= valor:
-                self.saldo -= valor
+            if float(self.saldo) >= float(valor):
+                self.saldo -= float(valor)
                 dicContaUser.update({self.Token: self})
 
             else:
@@ -91,7 +100,7 @@ class Admin(Conta):
             alvo = dicContaUser.get(conta)
             while alvo.saldo + valor < 0:
                 valor = float(input("digite um valor valido de operação:\n"))
-            alvo.saldo = alvo.saldo + valor
+            alvo.saldo = float(alvo.saldo) + float(valor)
             dicContaUser.update({alvo.Token: alvo})
         else:
             senha2 = input("senha invalida, tente novamente:").strip()
