@@ -12,14 +12,17 @@ from Conta import (
 )
 import re, random
 
-mainatd = Conta("123", "Isac", "060", "10000", "1234")
+mainatd = Conta("123", "Isac", "060", 10000, "1234")
 dicContaUser.update({"1234": mainatd})
 
-mainatd = Premium("Isac", "123", "060", "12300", "12345")
+mainatd = Premium("Isac", "123", "060", 12300, "12345")
 dicContaUser.update({"12345": mainatd})
 
 mainadm = Admin("Nome", "Senha", "Cpf", "123")
 dicContaAdm.update({"123": mainadm})
+
+Selic22 = invest(10, 0.10, "selic", 1000, 8)
+dicInvest.update({"selic22": Selic22})
 # fazer menu para menu e sistema de login
 # python talvez tenha alguma lib facil de usar de sqlite
 
@@ -53,11 +56,11 @@ def modify(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
 
 
 def payInterest(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
-    investname = input("digite o investimento")
+    investname = input("digite o investimento: ")
     while investname not in dicInvest:
-        investname = input("digite investimento valido")
+        investname = input("digite investimento valido: ")
     aux = dicInvest.get(investname)
-    aux.intestrate(investname)
+    aux.interestrate(investname)
 
 
 def mudarsenhaa(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
@@ -162,7 +165,7 @@ def menuUser(auxtoken):
             "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
         )
         print(
-            " 1 - Saque\n  2 - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Criar Cartão \n 6 - Mudar Senha \n 7 - Dados do Cartão \n 8 - Compra cartão \n 9 - Sair"
+            " 1 - Saque\n 2 - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Criar Cartão \n 6 - Mudar Senha \n 7 - Dados do Cartão \n 8 - Compra cartão \n 9 - Sair"
         )
         hold = input().strip()
         while hold not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]:
@@ -191,7 +194,7 @@ def menuPremium(auxtoken):
             "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
         )
         print(
-            " 1 - Saque\n  2 - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Criar Cartão \n 6 - Mudar Senha \n 7 - Dados do Cartão \n 8 - Compra cartão \n 9 - Investir \n 10 - Sair"
+            " 1 - Saque\n 2 - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Criar Cartão \n 6 - Mudar Senha \n 7 - Dados do Cartão \n 8 - Compra cartão \n 9 - Investir \n 10 - Sair"
         )
         hold = input().strip()
         while hold not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]:

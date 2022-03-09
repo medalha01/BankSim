@@ -105,23 +105,23 @@ class Admin(Conta):
     def saldoMod(self, conta, valor):
         # pegar codigo e valor no main
         # transformar em int
-        senha2 = input("Digite senha do usuario para realizar a operação:").strip()
+        senha2 = input("Digite senha para realizar a operação:").strip()
         if self.senha == senha2:
             alvo = dicContaUser.get(conta)
             while alvo.saldo + valor < 0:
                 valor = float(input("digite um valor valido de operação:\n"))
             alvo.saldo = float(alvo.saldo) + float(valor)
-            dicContaUser.update({alvo.Token: alvo})
+            dicContaUser.update({alvo.token: alvo})
         else:
-            senha2 = input("senha invalida, tente novamente:").strip()
+            senha2 = input("senha invalida, encerrando operação.").strip()
 
     def investCreation(self):
         nome = input("Digite o nome do investimento:")
-        duration = input("Digite a duração máxima do investimento:")
-        juros = input("Digite os juros:")
+        duration = int(input("Digite a duração máxima do investimento:"))
+        juros = float(input("Digite os juros:"))
         tipo = input("Digite o tipo de investimento:")
-        custo = input("Digite o custo de entrada:")
-        mtime = input("Digite o tempo minimo para retirada:")
+        custo = float(input("Digite o custo de entrada:"))
+        mtime = int(input("Digite o tempo minimo para retirada:"))
         investimento = invest(duration, juros, tipo, custo, mtime)
         dicInvest.update({nome: investimento})
 
@@ -173,13 +173,13 @@ class Premium(Conta):
         
     def investir(self):
         print(dicInvest)
-        nome = input("Selecione o investimento")
+        nome = input("Selecione o investimento: ")
         while nome not in dicInvest:
-            nome = input("Selecione um investimento valido")
+            nome = input("Selecione um investimento valido: ")
         investimento = dicInvest.get(nome)
-        Quant = input("Quanto deseja investir?")
-        while Quant > self.Saldo:
-            Quant = input("Digite uma quantia valida!")
+        Quant = float(input("Quanto deseja investir?"))
+        while Quant > self.saldo:
+            Quant = float(input("Digite uma quantia valida!"))
         if Quant < investimento.custo:
             print(
                 "O valor de entrada é maior que a quantidade desejada que seja investido."
@@ -189,11 +189,15 @@ class Premium(Conta):
             hold = self.Carteira.get(nome)
             if hold == None:
                 self.Carteira.update(invest2)
-                self.Saldo = self.Saldo - Quant
+                self.saldo = self.saldo - Quant
+                print(f"Seu Saldo é de:{self.saldo}\n")
+
             else:
                 hold = hold + Quant
                 self.Carteira.update({nome: hold})
                 self.saldo = self.saldo - Quant
+                print(f"Seu Saldo é de:{self.saldo}\n")
+
 
 
 class invest(Premium):
@@ -210,7 +214,7 @@ class invest(Premium):
         for x in dicContaUser.values():
             if x.Prem == 1:
                 carteira = x.Carteira
-                tokenalvo = x.Token
+                tokenalvo = x.token
                 for i in carteira.keys():
                     if investname == i:
                         valor = carteira.get(investname)
