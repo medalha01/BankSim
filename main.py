@@ -11,8 +11,8 @@ from Conta import (
 )
 import re, random
 
-mainadm = Admin("Nome", "Senha", "Cpf", 123)
-dicContaAdm.update({123: mainadm})
+mainadm = Admin("Nome", "Senha", "Cpf", "123")
+dicContaAdm.update({"123": mainadm})
 # fazer menu para menu e sistema de login
 # python talvez tenha alguma lib facil de usar de sqlite
 
@@ -116,8 +116,8 @@ def criarCartao(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     j3 = str(random.randrange(9)) + str(random.randrange(9)) + str(random.randrange(9))
     j4 = input("Digite a senha do cartão")
     Token = auxtoken
-    Cartao = Cartao(j1, j2, j3, j4, Token)
-    dicCard.update({Token: Cartao})
+    Carta = Cartao(j1, j2, j3, j4, Token)
+    dicCard.update({Token: Carta})
 
 
 def menuUser(auxtoken):
@@ -216,12 +216,11 @@ while True:
                     x(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm)
             else:
                 print("Senha invalida")
-                break
     ## if auxtoken not in dicContaUser or auxpassword not in dicContaUser:
     ##    print("Token ou senha invalido\n")
     elif aux in "2":
         print("Bem vindo ao sistema! \nDigite Token e Senha\n")
-        auxtoken = int(input("Token: ").strip())
+        auxtoken = input("Token: ").strip()
         auxpassword = input("Senha: ").strip()
         token2 = dicContaAdm.get(auxtoken)
         if token2 == None:
@@ -232,7 +231,6 @@ while True:
                 x(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm)
             else:
                 print("Senha invalida")
-                break
         ####if auxtoken not in dicContaAdm or auxpassword not in dicContaAdm:
         ###print("Token ou senha invalido\n")
     else:

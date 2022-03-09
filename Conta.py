@@ -114,6 +114,7 @@ class Admin(Conta):
         premium = "premium, pr, prmium, pre, especial, completa"
         conta = ("conta", "normal", " ", "")
         ct = secrets.token_bytes(20)
+        ct = str(ct)
         if tipo.lower() in administrador:
             i1 = input("Qual o nome do dono da conta?")
             i2 = input("Qual o cpf do dona da conta?")
