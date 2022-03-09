@@ -11,11 +11,13 @@ from Conta import (
 )
 import re, random
 
+mainadm = Admin("Nome", "Senha", "Cpf")
+dicContaAdm.update({123: mainadm})
 # fazer menu para menu e sistema de login
 # python talvez tenha alguma lib facil de usar de sqlite
 
 ##"    1: accountCreate(),2: investCreate(),3: deleteAccount(), 4: modify(), 5: payinterest(),###
-def accountCreat(auxtoken):
+def accountCreate(auxtoken):
     pool = ["admin", "normal", "premium"]
     print(f"Qual tipo de conta você deseja criar? \n {pool}")
     adm = dicContaAdm.get(auxtoken)
@@ -106,7 +108,7 @@ def menuUser(auxtoken):
         hold = int(hold)
         if hold == 6:
             break
-
+        return oper.get(hold)
     oper = {
         1: sacar(auxtoken),
         2: depositar(auxtoken),
@@ -114,8 +116,6 @@ def menuUser(auxtoken):
         4: extrato(auxtoken),
         5: criarCartao(auxtoken),
     }
-    func = oper.get(hold)
-    func
 
 
 def menuPremium(auxtoken):
@@ -132,7 +132,7 @@ def menuPremium(auxtoken):
         hold = int(hold)
         if hold == 7:
             break
-
+        return oper.get(hold)
     oper = {
         1: sacar(auxtoken),
         2: depositar(auxtoken),
@@ -141,8 +141,6 @@ def menuPremium(auxtoken):
         5: criarCartao(auxtoken),
         6: investe(auxtoken),
     }
-    func = oper.get(hold)
-    func
 
 
 def menuAdm(hold):
@@ -159,6 +157,7 @@ def menuAdm(hold):
         hold = int(hold)
         if hold == 6:
             break
+        return oper.get(hold)
     ##arumar oper
     oper = {
         1: accountCreate(auxtoken),
@@ -167,7 +166,6 @@ def menuAdm(hold):
         4: modify(),
         5: payinterest(),
     }
-    return oper.get(hold)
 
 
 while True:

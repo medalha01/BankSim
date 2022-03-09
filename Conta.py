@@ -81,7 +81,7 @@ class Cartao(Conta):
 
 class Admin(Conta):
     def __init__(self, Nome, Senha, Cpf):
-        Conta.__init__(self, Cpf, Nome, Senha)
+        Conta.__init__(self, Cpf, Nome, Senha, 0)
 
     def saldoMod(self, conta, valor):
         # pegar codigo e valor no main
