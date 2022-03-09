@@ -8,6 +8,7 @@ from Conta import (
     dicCard,
     Admin,
     invest,
+    dicCardHist,
 )
 import re, random
 

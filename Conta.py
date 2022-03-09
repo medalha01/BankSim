@@ -5,6 +5,7 @@ dicInvest = {}
 dicContaAdm = {}
 dicContaUser = {}
 dicCard = {}
+listCardHist = []
 ##Pegar contas do dicionario e devolver elas, nunca chamar aleatoriamente
 class Conta:
     def __init__(self, Cpf, Nome, Senha, Saldo, Token):
@@ -70,8 +71,11 @@ class Cartao:
         else:
             if float(self.saldo) >= float(valor):
                 self.saldo -= float(valor)
+                self.historico.append(
+                    "Transação realizada {self.numero_card}: + {valor}"
+                )
                 dicContaUser.update({self.Token: self})
-
+                listCardHist.append(self.Numero_card, self.historico)
             else:
                 print("Saldo insuficiente")
 
@@ -83,6 +87,12 @@ class Cartao:
             self.block = 1
         else:
             self.block = 0
+
+
+class transactions(Cartao):
+    def __init__(self, Limite_trans, Numero_card, Codigo_seg, Senha_card, Token):
+        Conta.__init__(self, Limite_trans, Numero_card, Codigo_seg, Senha_card, Token)
+        self.historico = []
 
 
 # Pedir senha para todo uso do cartão
