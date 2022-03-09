@@ -12,14 +12,17 @@ from Conta import (
 )
 import re, random
 
-mainatd = Conta("123", "Isac", "060", "10000", "1234")
+mainatd = Conta("123", "Isac", "060", 10000, "1234")
 dicContaUser.update({"1234": mainatd})
 
-mainatd = Premium("Isac", "123", "060", "12300", "12345")
+mainatd = Premium("Isac", "123", "060", 12300, "12345")
 dicContaUser.update({"12345": mainatd})
 
 mainadm = Admin("Nome", "Senha", "Cpf", "123")
 dicContaAdm.update({"123": mainadm})
+
+Selic22 = invest(10, 0.10, "selic", 1000, 8)
+dicInvest.update({"selic22": Selic22})
 # fazer menu para menu e sistema de login
 # python talvez tenha alguma lib facil de usar de sqlite
 
@@ -53,9 +56,9 @@ def modify(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
 
 
 def payInterest(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
-    investname = input("digite o investimento")
+    investname = input("digite o investimento: ")
     while investname not in dicInvest:
-        investname = input("digite investimento valido")
+        investname = input("digite investimento valido: ")
     aux = dicInvest.get(investname)
     aux.intestrate(investname)
 
@@ -77,16 +80,15 @@ def sacar(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
 
 def imprimircartao(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     x = dicCard.get(auxtoken)
-    print("Seu cartão é:")
-    print(x)
+    print("Seu cartão é: ")
+    print(x.numero_card)
+    print(x.codigo_seg)
 
 
 def compracard(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     x = dicCard.get(auxtoken)
-    y = dicContaUser.get(auxtoken)
-    inp = float(input("Digite o valor da compra"))
-    y.saldo = float(y.saldo) - inp
-    dicContaUser.update({y.token: y})
+    Valor = float(input("De quanto é o valor da compra: "))
+    x.Compra(Valor)
 
 
 def depositar(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
@@ -162,13 +164,13 @@ def menuUser(auxtoken):
             "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
         )
         print(
-            " 1 - Saque\n  2 - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Criar Cartão \n 6 - Mudar Senha \n 7 - Dados do Cartão \n 8 - Compra cartão \n 9 - Sair"
+            " 1 - Saque\n 2 - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Criar Cartão \n 6 - Mudar Senha \n 7 - Dados do Cartão \n 8 - Compra cartão \n 9 - Sair"
         )
         hold = input().strip()
         while hold not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]:
             hold = input("Digite um input válido").strip()
         hold = int(hold)
-        if hold == 7:
+        if hold == 9:
             break
         return oper.get(hold)
 
@@ -191,13 +193,13 @@ def menuPremium(auxtoken):
             "Bem vindo ao sistema! \nPara que eu possa ajudar digite qual serviço você procura:"
         )
         print(
-            " 1 - Saque\n  2 - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Criar Cartão \n 6 - Mudar Senha \n 7 - Dados do Cartão \n 8 - Compra cartão \n 9 - Investir \n 10 - Sair"
+            " 1 - Saque\n 2 - Depósito\n 3 - Transferência\n 4 - Extrato\n 5 - Criar Cartão \n 6 - Mudar Senha \n 7 - Dados do Cartão \n 8 - Compra cartão \n 9 - Investir \n 10 - Sair"
         )
         hold = input().strip()
         while hold not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]:
             hold = input("Digite um input válido").strip()
         hold = int(hold)
-        if hold == 8:
+        if hold == 10:
             break
         return oper.get(hold)
 
