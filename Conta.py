@@ -86,8 +86,8 @@ class Admin(Conta):
     def saldoMod(self, conta, valor):
         # pegar codigo e valor no main
         # transformar em int
-        senha2 = input("Digite sua senha para realizar a operação:").strip()
-        if self.Senha == senha2:
+        senha2 = input("Digite senha do usuario para realizar a operação:").strip()
+        if self.senha == senha2:
             alvo = dicContaUser.get(conta)          
             while alvo.saldo + valor < 0:
                 valor = float(input("digite um valor valido de operação:\n"))

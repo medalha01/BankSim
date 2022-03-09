@@ -201,7 +201,7 @@ while True:
     aux = input("Você deseja logar como:\n 1.Usuario\n 2.Admin\n")
     if aux in "1":
         print("Bem vindo ao sistema! \nDigite Token e Senha\n ")
-        auxtoken = int(input("Token: ").strip())
+        auxtoken = input("Token: ").strip()
         auxpassword = input("Senha: ").strip()
         token2 = dicContaUser.get(auxtoken)
         if token2 == None:
