@@ -44,7 +44,10 @@ def investCreate(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
 
 def deleteAccount(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):
     tokenalvo = input(("qual a conta(token) que será deletada?\n "))
-    dicContaUser.pop(tokenalvo)
+    if dicContaUser.get(tokenalvo) == None:
+        print("A conta não existe")
+    else:
+        dicContaUser.pop(tokenalvo)
 
 
 def modify(auxtoken, dicCard, dicInvest, dicContaUser, dicContaAdm):

@@ -121,7 +121,7 @@ class Admin(Conta):
         duration = int(input("Digite a duração máxima do investimento:"))
         juros = float(input("Digite os juros:"))
         tipo = input("Digite o tipo de investimento:")
-        custo = input("Digite o custo de entrada:")
+        custo = float(input("Digite o custo de entrada:"))
         mtime = input("Digite o tempo minimo para retirada:")
         investimento = invest(duration, juros, tipo, custo, mtime)
         dicInvest.update({nome: investimento})
@@ -179,7 +179,7 @@ class Premium(Conta):
             nome = input("Selecione um investimento valido: ")
         investimento = dicInvest.get(nome)
         Quant = float(input("Quanto deseja investir?"))
-        while Quant > self.saldo:
+        while Quant > float(self.saldo):
             Quant = float(input("Digite uma quantia valida!"))
         if Quant < investimento.custo:
             print(
